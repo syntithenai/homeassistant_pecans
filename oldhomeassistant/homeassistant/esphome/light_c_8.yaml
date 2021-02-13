@@ -1,0 +1,23 @@
+esphome:
+  name: light_c_8
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: "eeee"
+  password: ""
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Light C 8 Fallback Hotspot"
+    password: "fNbhb7iTVAlb"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:

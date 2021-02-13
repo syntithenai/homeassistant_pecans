@@ -1,0 +1,664 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+mqtt:
+  broker: 192.168.1.2
+  discovery: true
+#device_tracker:
+#  - platform: bluetooth_tracker
+  #
+zone: !include zones.yml  
+# Activate the configuration editor
+config:
+
+recorder:
+# mysql://user:pass@192.168.1.2/homeassistant?charset=utf8
+  db_url: !secret mysqlconnection
+
+scene: !include scenes.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+http:
+  #base_url: 192.168.1.2:8123
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  # Secrets are defined in the file secrets.yaml
+  #api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: peppertrees.duckdns.org:8123
+  ip_ban_enabled: False
+#  login_attempts_threshold: 3
+
+switch:
+  platform: command_line
+  switches:
+    # control tasmota with curl for water switches on/off/status
+    water_switch_1:
+      command_on: "/usr/bin/curl -X GET http://192.168.2.58/cm?cmnd=Power%20On"
+      command_off: "/usr/bin/curl -X GET http://192.168.2.58/cm?cmnd=Power%20Off"
+      command_state: "/usr/bin/curl -X GET http://192.168.2.58/cm?cmnd=Power | grep ON && echo $?"  
+      #value_template: '{{ value == {"POWER":"ON"} }}'
+      friendly_name: Water Switch 1
+#    water_switch_2:
+#      command_on: "/usr/bin/curl -X GET http://192.168.2.83/cm?cmnd=Power%20On"
+#      command_off: "/usr/bin/curl -X GET http://192.168.2.83/cm?cmnd=Power%20Off"
+#      command_state: "/usr/bin/curl -X GET http://192.168.2.83/cm?cmnd=Power | grep ON && echo $?"  
+#      #value_template: '{{ value == {"POWER":"ON"} }}'
+#      friendly_name: Water Switch 2
+#    #water_switch_3:
+#    #  command_on: "/usr/bin/curl -X GET http://192.168.2.58/cm?cmnd=Power%20On"
+#    #  command_off: "/usr/bin/curl -X GET http://192.168.2.58/cm?cmnd=Power%20Off"
+#    #  command_state: "/usr/bin/curl -X GET http://192.168.2.58/cm?cmnd=Power | grep ON && echo $?"  
+#      #value_template: '{{ value == {"POWER":"ON"} }}'
+#      friendly_name: Water Switch 3
+#    water_switch_4:
+#      command_on: "/usr/bin/curl -X GET http://192.168.2.59/cm?cmnd=Power%20On"
+#      command_off: "/usr/bin/curl -X GET http://192.168.2.59/cm?cmnd=Power%20Off"
+#      command_state: "/usr/bin/curl -X GET http://192.168.2.59/cm?cmnd=Power | grep ON && echo $?"  
+#      #value_template: '{{ value == {"POWER":"ON"} }}'
+#      friendly_name: Water Switch 4
+#    water_switch_5:
+#      command_on: "/usr/bin/curl -X GET http://192.168.2.53/cm?cmnd=Power%20On"
+#      command_off: "/usr/bin/curl -X GET http://192.168.2.53/cm?cmnd=Power%20Off"
+#      command_state: "/usr/bin/curl -X GET http://192.168.2.53/cm?cmnd=Power | grep ON && echo $?"  
+#      #value_template: '{{ value == {"POWER":"ON"} }}'
+#      friendly_name: Water Switch 5      
+      
+owntracks:
+
+camera:
+  - platform: generic
+    name: Lounge
+    still_image_url: http://192.168.2.1:8081
+    verify_ssl: false
+
+  - platform: bom
+    name: Canberra Radar
+    location: Canberra
+#camera:
+#    name: lounge
+#  - platform: ffmpeg
+#    input: /dev/video0
+shopping_list:
+
+utility_meter:
+  hourly_total_yield:
+    source: sensor.total_yield
+    cycle: hourly
+  daily_total_yield:
+    source: sensor.total_yield
+    cycle: daily
+  monthly_total_yield:
+    source: sensor.total_yield
+    cycle: monthly
+  yearly_total_yield:
+    source: sensor.total_yield
+    cycle: yearly
+  hourly_grid_total_yield:
+    source: sensor.grid_total_yield
+    cycle: hourly
+  daily_grid_total_yield:
+    source: sensor.grid_total_yield
+    cycle: daily
+  monthly_grid_total_yield:
+    source: sensor.grid_total_yield
+    cycle: monthly
+  yearly_grid_total_yield:
+    source: sensor.grid_total_yield
+    cycle: yearly
+  hourly_grid_total_absorbed:
+    source: sensor.grid_total_absorbed
+    cycle: hourly
+  daily_grid_total_absorbed:
+    source: sensor.grid_total_absorbed
+    cycle: daily
+  monthly_grid_total_absorbed:
+    source: sensor.grid_total_absorbed
+    cycle: monthly
+  yearly_grid_total_absorbed:
+    source: sensor.grid_total_absorbed
+    cycle: yearly
+
+#Pricing General charges 
+#Solar feed-in 10.2 cents/kWh
+#Daily supply charge 105.26 cents/day
+#General usage rates 27.26 cents/kWh
+binary_sensor:
+  - platform: tod
+    name: Day
+    after: sunrise
+    before: sunset
+    
+    
+    
+sensor:
+  - platform: bom_forecast
+    product_id: IDN11118
+    name: Bega
+    forecast_days: 6
+    rest_of_today: True
+    friendly: True
+    friendly_state_format: >-
+      {min}-{max} {summary}.  
+      Rain {chance_of_rain} of {possible_rainfall} 
+      
+    monitored_conditions:
+      - 'max'
+      - 'min'
+      - 'chance_of_rain'
+      - 'possible_rainfall'
+      - 'summary'
+
+#  - platform: fitbit
+##    clock_format: 12H
+#    monitored_resources:
+#      - "activities/steps"
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'      
+# INVERTER MONITORING
+  - platform: sma
+    host: 192.168.1.215
+    ssl: true
+    group: installer
+    verify_ssl: false
+    scan_interval: 60
+    password: !secret ysmapassword
+    sensors:
+      - pv_power
+      - pv_gen_meter
+      - total_yield
+      - daily_yield
+      - current_consumption
+      - total_consumption
+      - grid_power_supplied
+      - grid_power_absorbed
+      - grid_total_yield
+      - grid_total_absorbed
+      - grid_power
+      - frequency
+      - voltage_l1
+      - voltage_l2
+      - voltage_l2
+      - status
+      - grid_power
+
+   # system monitoring
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: swap_use_percent
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+
+  - platform: template
+    sensors:
+  
+      sun_elevation:
+        friendly_name: "Sun Elevation"
+        unit_of_measurement: '°'
+        value_template: "{{ state_attr('sun.sun', 'elevation') }}"
+      
+      ######################
+      # COST CONSTANTS
+      
+      cost_per_kwh:
+        friendly_name: 'Cost Per kWh'
+        unit_of_measurement: "$"
+        value_template: "{{ ( 0.2726 | float ) | round(4) }}"
+      income_per_kwh:
+        friendly_name: 'Feed In Per kWh'
+        unit_of_measurement: "$"
+        value_template: "{{ (0.1002 | float ) | round(4) }}"
+      daily_supply_charge:
+        friendly_name: 'Daily Supply Charge'
+        unit_of_measurement: "$"
+        value_template: "{{ (1.0526 | float ) | round(4) }}"
+      
+       ######################
+       # LIVE POWER (W)
+       
+      # combined supply and absorbed
+      grid_power_balance:
+        friendly_name: 'Power Balance'
+        unit_of_measurement: "W"
+        entity_id:
+          - sensor.grid_power_supplied
+          - sensor.grid_power_absorbed
+        value_template: >-
+          {% set supplied = states('sensor.grid_power_supplied')| float %}
+          {% set absorbed = states('sensor.grid_power_absorbed')| float %}
+          {% set inOut = supplied - absorbed| float %}
+          {{ (inOut)|round(2) }}
+          
+      # generation minus power balance    
+      grid_consumption:
+        friendly_name: 'Real Power Draw (minus House Solar)'
+        unit_of_measurement: "W"
+        entity_id:
+          - sensor.grid_power
+          - sensor.grid_power_supplied
+          - sensor.grid_power_absorbed
+        value_template: >-
+          {% set supplied = states('sensor.grid_power_supplied')| float %}
+          {% set absorbed = states('sensor.grid_power_absorbed')| float %}
+          {% set generated = states('sensor.grid_power')| float %}
+          {% set inOut = supplied - absorbed| float %}
+          {% set consumption = generated - inOut| float %}
+          {{ (consumption)|round(2) }}      
+          
+      # sum of device power
+      total_power_draw:
+          friendly_name: 'Total Device Power Draw'
+          unit_of_measurement: "W"
+          #value_template: "{{ (states('sensor.pool_pump_power') | float + states('sensor.bedroom_tv_power') | float + states('sensor.washing_machine_power') | float + states('sensor.fridge_power') | float + states('sensor.portable_1_power') | float + states('sensor.file_server_power') | float + states('sensor.bike_charger_power') | float + states('sensor.food_dryer_power') | float + states('sensor.lounge_tv_power') | float + states('sensor.stereo_power') | float) | round(2) }}"
+          value_template: "{{ states.sensor|selectattr('entity_id','in',state_attr('group.device_power_usage','entity_id'))|map(attribute='state')|map('int')|sum }}
+"
+     # difference between device measured draw and approximate consumption from inverter
+      unmonitored_power_consumption :
+        friendly_name: 'Unmonitored Power Consumption'
+        unit_of_measurement: "W"
+        value_template: "{{ (states('sensor.grid_consumption') | float -  states('sensor.total_power_draw') | float ) | round(4) }}"
+
+     # is swimming machine being used
+      swimming_machine_in_use :
+        friendly_name: 'Swimming Machine Active'
+        unit_of_measurement: ""
+        value_template: "{% if states('sensor.swimming_machine_power')|float > 300 %}YES{% else %}NO{% endif %}"
+
+
+     # prices
+      dollars_per_hour_bought:
+        friendly_name: 'Cost Per Hour'
+        unit_of_measurement: "$"
+        value_template: "{{ ((states('sensor.grid_power_absorbed') | float / 1000) *  states('sensor.cost_per_kwh') | float ) | round(4) }}"
+
+      dollars_per_hour_sold: 
+        friendly_name: 'Income Per Hour'
+        unit_of_measurement: "$"
+        value_template: "{{ ((states('sensor.grid_power_supplied') | float / 1000) *  states('sensor.income_per_kwh') | float ) | round(4) }}"
+
+
+      
+      ######################
+      # TOTAL POWER USED (kWh)
+      
+      
+      total_solar_used:
+        friendly_name: 'Total Solar Power Used'
+        unit_of_measurement: "kWh"
+        value_template: "{{ (states.sensor.total_yield.state | float  - states.sensor.grid_total_yield.state | float)  | float  | round(2) }}"
+      
+      
+    
+      # power used as sum of devices
+      device_total_energy_today:
+        friendly_name: 'Total Device Energy Today'
+        unit_of_measurement: "kWh"
+        #value_template: "{{ (states('sensor.pool_pump_daily_energy') | float + states('sensor.bedroom_tv_daily_energy') | float + states('sensor.washing_machine_daily_energy') | float + states('sensor.fridge_daily_energy') | float + states('sensor.portable_1_daily_energy') | float + states('sensor.file_server_daily_energy') | float + states('sensor.bike_charger_daily_energy') | float + states('sensor.food_dryer_daily_energy') | float + states('sensor.lounge_tv_daily_energy') | float + states('sensor.stereo_daily_energy') | float) | round(2) }}"
+        value_template: "{{ states.sensor|selectattr('entity_id','in',state_attr('group.device_daily_energy','entity_id'))|map(attribute='state')|map('int')|sum }}"
+
+      # power used as difference between generated and sold
+      
+       # hourly
+      hourly_grid_total_used:
+        friendly_name: 'Solar Power Used This Hour'
+        unit_of_measurement: "kWh"
+        value_template: "{{ states('sensor.hourly_total_yield') | float - states('sensor.hourly_grid_total_yield') | float  | round(2) }}"
+        
+      
+      # daily
+      daily_grid_total_used:
+        friendly_name: 'Solar Power Used Today'
+        unit_of_measurement: "kWh"
+        value_template: "{{ states('sensor.daily_total_yield') | float - states('sensor.daily_grid_total_yield') | float  | round(2) }}"
+        
+      # monthly
+      monthly_grid_total_used:
+        friendly_name: 'Solar Power Used This Month'
+        unit_of_measurement: "kWh"
+        value_template: "{{ states('sensor.monthly_total_yield') | float - states('sensor.monthly_grid_total_yield') | float  | round(2) }}"
+        
+      # yearly
+      yearly_grid_total_used:
+        friendly_name: 'Solar Power Used This Year'
+        unit_of_measurement: "kWh"
+        value_template: "{{ states('sensor.yearly_total_yield') | float - states('sensor.yearly_grid_total_yield') | float  | round(2) }}"  
+    
+      
+      ###############
+      # prices 
+      
+       # hourly
+      hourly_grid_power_sold:
+        friendly_name: 'Power Sold This Hour'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.hourly_grid_total_yield') | float * states('sensor.income_per_kwh') | float ) | round(2) }}"
+      hourly_grid_power_purchased:
+        friendly_name: 'Power Purchased This Hour'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.hourly_grid_total_absorbed') | float * states('sensor.cost_per_kwh') | float  ) | round(2) }}"
+      hourly_grid_power_saved:
+        friendly_name: 'Power Saved This Hour'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.hourly_grid_total_used') | float * (states('sensor.cost_per_kwh') | float - states('sensor.income_per_kwh') | float )) | round(2) }}"
+      
+      
+      # daily
+      daily_grid_power_sold:
+        friendly_name: 'Power Sold Today'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.daily_grid_total_yield') | float * states('sensor.income_per_kwh') | float ) | round(2) }}"
+      daily_grid_power_purchased:
+        friendly_name: 'Power Purchased Today'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.daily_grid_total_absorbed') | float * states('sensor.cost_per_kwh') | float  ) | round(2) }}"
+      daily_grid_power_saved:
+        friendly_name: 'Power Saved Today'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.daily_grid_total_used') | float * (states('sensor.cost_per_kwh') | float - states('sensor.income_per_kwh') | float )) | round(2) }}"
+      
+      # monthly
+      monthly_grid_power_sold:
+        friendly_name: 'Power Sold This Month'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.monthly_grid_total_yield') | float * states('sensor.income_per_kwh') | float ) | round(2) }}"
+      monthly_grid_power_purchased:
+        friendly_name: 'Power Purchased This Month'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.monthly_grid_total_absorbed') | float * states('sensor.cost_per_kwh') | float ) | round(2) }}"
+      monthly_grid_power_saved:
+        friendly_name: 'Power Saved This Month'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.monthly_grid_total_used') | float * (states('sensor.cost_per_kwh') | float - states('sensor.income_per_kwh') | float )  ) | round(2) }}"
+      
+      # annually
+      yearly_grid_power_sold:
+        friendly_name: 'Power Sold This Year'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.yearly_grid_total_yield') | float * states('sensor.income_per_kwh') | float ) | round(2) }}"
+      yearly_grid_power_purchased:
+        friendly_name: 'Power Purchased This Year'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.yearly_grid_total_absorbed') | float * states('sensor.cost_per_kwh') | float ) | round(2) }}"
+      yearly_grid_power_saved:
+        friendly_name: 'Power Saved This Year'
+        unit_of_measurement: "$"
+        value_template: "{{ (states('sensor.yearly_grid_total_used') | float * (states('sensor.cost_per_kwh') | float - states('sensor.income_per_kwh') | float ) ) | round(2)  }}"
+
+      swimming_machine_use_minutes:
+        friendly_name: "Swimming Machine Use"
+        unit_of_measurement: 'minutes'
+        value_template: "{{ ( (states('sensor.swimming_machine_use') | float) * 60 ) | round(1) }}"
+         
+
+# {% set generated = states('sensor.grid_power') |float %}
+#Generated {{ (generated)|round(2) }}
+#Supplied {{ (supplied)|round(2) }}
+#Absorbed {{ (absorbed)|round(2) }}
+#InOut 
+  - platform: history_stats
+    name: TV ON today
+    entity_id: switch.bedroom_tv
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+    
+  - platform: history_stats
+    name: Taras TV ON today
+    entity_id: switch.taras_tv
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+    
+  - platform: history_stats
+    name: Lounge TV ON today
+    entity_id: switch.lounge_tv
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+        
+    
+  - platform: history_stats
+    name: swimming_machine_use
+    entity_id: sensor.swimming_machine_in_use
+    state: 'YES'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}' 
+       
+#  - platform: scrape
+#    resource: https://www.abc.net.au/news/feed/51120/rss.xml
+#    name: ABC Latest News 1
+#    select: "rss channel item:nth-of-type(1) title"
+#    value_template: '{{ value | truncate(255) }}'
+#  - platform: scrape
+#    resource: https://www.abc.net.au/news/feed/51120/rss.xml
+#    name: ABC Latest News 2
+#    select: "rss channel item:nth-of-type(2) title"
+#    value_template: '{{ value | truncate(255) }}'    
+#  - platform: scrape
+#    resource: https://www.abc.net.au/news/feed/51120/rss.xml
+#    name: ABC Latest News 3
+#    select: "rss channel item:nth-of-type(3) title"
+#    value_template: '{{ value | truncate(255) }}'    
+    
+    # Request every hour
+#    scan_interval: 3600
+#    headers:
+#      User-Agent: Mozilla/5.0
+  - platform: bom
+    station: IDN60801.95931
+    name: Bega Weather (BOM)
+    monitored_conditions:
+      - apparent_t
+      - cloud
+      - cloud_base_m
+      - cloud_oktas
+      - cloud_type_id
+      - cloud_type
+      - delta_t
+      - gust_kmh
+      - gust_kt
+      - air_temp
+      - dewpt
+      - local_date_time
+      - local_date_time_full
+      - press
+      - press_qnh
+      - press_msl
+      - press_tend
+      - rain_trace
+      - rel_hum
+      - sea_state
+      - swell_dir_worded
+      - swell_height
+      - swell_period
+      - vis_km
+      - weather
+      - wind_dir
+      - wind_spd_kmh
+      - wind_spd_kt
+  - platform: moon
+##  - platform: nsw_fuel_station
+#    station_id: 2227
+#  - platform: nsw_fuel_station
+#    station_id: 509    
+#  - platform: nsw_fuel_station
+#    station_id: 126
+
+#      - grid_power_supplied 
+ #     - grid_power_absorbed
+    
+#  - platform: bitcoin
+#    display_options:
+#      - exchangerate
+#      - trade_volume_btc
+#  - platform: fitbit
+#    clock_format: 12H
+#    monitored_resources:
+#      - "body/weight"
+#      - "activities/activityCalories"
+#      - "activities/calories"
+#      - "activities/caloriesBMR"
+#      - "activities/distance"
+#      - "activities/elevation"
+#      - "activities/floors"
+#      - "activities/heart"
+#      - "activities/minutesFairlyActive"
+#      - "activities/minutesLightlyActive"
+#      - "activities/minutesSedentary"
+#      - "activities/minutesVeryActive"
+#      - "activities/steps"
+#      - "activities/tracker/activityCalories"
+#      - "activities/tracker/calories"
+#      - "activities/tracker/distance"
+#      - "activities/tracker/elevation"
+#      - "activities/tracker/floors"
+#      - "activities/tracker/minutesFairlyActive"
+#      - "activities/tracker/minutesLightlyActive"
+#      - "activities/tracker/minutesSedentary"
+#      - "activities/tracker/minutesVeryActive"
+#      - "activities/tracker/steps"
+#      - "body/bmi"
+#      - "body/fat"
+#      - "body/weight"
+#      - "devices/battery"
+#      - "sleep/awakeningsCount"
+#      - "sleep/efficiency"
+#      - "sleep/minutesAfterWakeup"
+#      - "sleep/minutesAsleep"
+#      - "sleep/minutesAwake"
+#      - "sleep/minutesToFallAsleep"
+#      - "sleep/startTime"
+#      - "sleep/timeInBed"
+      
+
+# light:
+#   - platform: mqtt
+#     name: "CFG RGB+W Light"
+#     command_topic: "cmnd/light_c_6/POWER"
+#     state_topic: "tele/light_c_6/STATE"
+#     state_value_template: "{{value_json.POWER}}"
+#     availability_topic: "tele/light_c_6/LWT"
+#     brightness_command_topic: "cmnd/light_c_6/Dimmer"
+#     brightness_state_topic: "tele/light_c_6/STATE"
+#     brightness_scale: 100
+#     on_command_type: "brightness"
+#     brightness_value_template: "{{value_json.Dimmer}}"
+#     white_value_state_topic: "tele/light_c_6/STATE"
+#     white_value_command_topic: "cmnd/light_c_6/White"
+#     white_value_scale: 100
+#     white_value_template: "{{ value_json.Channel[3] }}"
+#     rgb_command_topic: "cmnd/light_c_6/Color2"
+#     rgb_state_topic: "tele/light_c_6/STATE"
+#     rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+#     effect_command_topic: "cmnd/light_c_6/Scheme"
+#     effect_state_topic: "tele/light_c_6/STATE"
+#     effect_value_template: "{{value_json.Scheme}}"
+#     effect_list:
+#       - 0
+#       - 1
+#       - 2
+#       - 3
+#       - 4
+#     payload_on: "ON"
+#     payload_off: "OFF"
+#     payload_available: "Online"
+#     payload_not_available: "Offline"
+#     qos: 1
+#     retain: false
+    
+
+# light:
+#   - platform: ...
+#     # ...
+#     effects:
+#       # Use default parameters:
+#       - random:
+
+  
+# Text to speech
+#tts:
+#  - platform: google_translate
+#media_player:
+#  - platform: kodi
+#    host: 192.168.2.80
+#    username: kodi
+#    password: pojpoj72
+#    # Example configuration.yaml entry
+#  - platform: clementine
+#    host: 192.168.1.200
+    
+#android_ip_webcam:
+#  - host: 192.168.2.95  
+
+# light:
+#   - platform: mqtt
+#     name: "Mirabella RGBW 01"
+#     command_topic: "cmnd/office_light/POWER"
+#     state_topic: "tele/office_light/STATE"
+#     state_value_template: "{{value_json.POWER}}"
+#     availability_topic: "tele/office_light/LWT"
+#     brightness_command_topic: "cmnd/office_light/Dimmer"
+#     brightness_state_topic: "tele/office_light/STATE"
+#     brightness_scale: 100
+#     on_command_type: "brightness"
+#     brightness_value_template: "{{value_json.Dimmer}}"
+#     rgb_command_topic: "cmnd/office_light/Color2"
+#     rgb_state_topic: "tele/office_light/STATE"
+#     rgb_value_template: "{{value_json.Color.split(',')[0:3]|join(',')}}"
+#     white_value_state_topic: "tele/office_light/STATE"
+#     white_value_command_topic: "cmnd/office_light/White"
+#     white_value_scale: 100
+#     white_value_template: "{{ value_json.Channel[3] }}"
+#     effect_command_topic: "cmnd/office_light/Scheme"
+#     effect_state_topic: "tele/office_light/STATE"
+#     effect_value_template: "{{value_json.Scheme}}"
+#     effect_list:
+#       - 0
+#       - 1
+#       - 2
+#       - 3
+#       - 4
+#     payload_on: "ON"
+#     payload_off: "OFF"
+#     payload_available: "Online"
+#     payload_not_available: "Offline"
+#     qos: 1
+#     retain: false
+
+
+#panel_custom:
+#  - name: hassio-main
+#    sidebar_title: Configurator2
+#    sidebar_icon: hass:settings
+#    js_url: /api/hassio/app/entrypoint.js
+#    url_path: configurator
+#    embed_iframe: true
+#    require_admin: true
+#    config:
+#      ingress: core_configurator
+
+#panel_iframe:
+#  configurator:
+#    title: Configurator
+#    icon: mdi:wrench
+#    url: http://peppertrees.duckdns.org:8080/api/hassio/app/entrypoint.js
+
+#tuya:
+#  username: syntithenai@gmail.com
+#  password: pojpoj72
+#  country_code: 61
+#  platform: tuya
+  

@@ -1,0 +1,50 @@
+esphome:
+  name: light_c_6
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  networks:
+  - ssid: "HOUSE"
+    password: Welcome2
+    priority: 2
+  - ssid: "PEPPERTREES"
+    password: Welcome2
+    priority: 1
+#  use_address: 192.168.1.124
+  use_address: 192.168.2.53
+
+logger:
+
+api:
+
+ota:
+
+web_server:
+  port: 80
+
+output:
+  - platform: esp8266_pwm
+    id: output_red
+    pin: GPIO4
+  - platform: esp8266_pwm
+    id: output_green
+    pin: GPIO12
+  - platform: esp8266_pwm
+    id: output_blue
+    pin: GPIO14
+  - platform: esp8266_pwm
+    id: output_white
+    pin: GPIO5
+
+light:
+  - platform: rgbw
+    name: "Pantry Light"
+    id: light_c_6
+    red: output_red
+    green: output_green
+    blue: output_blue
+    white: output_white
+
+    # Ensure the light turns on by default if the physical switch is actuated.
+    restore_mode: ALWAYS_ON

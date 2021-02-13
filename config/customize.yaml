@@ -1,0 +1,2 @@
+binary_sensor.taras_fridge_button:
+  friendly_name: Internet Connection Button

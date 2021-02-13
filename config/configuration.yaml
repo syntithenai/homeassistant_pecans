@@ -1,0 +1,168 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  broker: 192.168.1.11     
+
+recorder:
+#  db_url: mysql://homeassistant:pojpoj72@192.168.1.11/homeassistant?charset=utf8
+  purge_keep_days: 2
+  commit_interval: 1200
+  include:
+    entities: 
+      - sensor.grid_power
+      - sensor.grid_power_absorbed
+      - sensor.grid_power_supplied
+
+history: 
+  include:
+    entity_globs: none 
+
+logbook:
+  include:
+    entity_globs: none
+
+asuswrt:
+  host: 192.168.1.1   
+  username: admin              
+  password: joifwe
+  protocol: telnet
+  mode: ap
+  sensors:
+    - devices
+    - upload
+    - download
+    - upload_speed
+    - download_speed
+
+
+binary_sensor:
+  - platform: ping
+    host: google.com 
+    name: "is online"
+    count: 2
+    scan_interval: 120
+
+sensor:
+#  - platform: sma
+#    host: 192.168.1.100
+#    ssl: true
+#    verify_ssl: false
+#    password: Pyramid1
+#    group: installer
+#    sensors:
+#      - grid_power_supplied
+#      - grid_power_absorbed
+#      - grid_total_yield
+#      - grid_total_absorbed
+#      - grid_power
+
+  - platform: template
+    sensors:
+      pixel2battery:
+        value_template: "{{  state_attr('device_tracker.stever_pixel2','battery_level') }}"
+switch:
+  - platform: command_line
+    switches:
+      water_switch_1:
+        command_on: "/usr/bin/curl -X GET 'http://water_switch_1/?m=1&o=1'"
+        command_off: "/usr/bin/curl -X GET 'http://water_switch_1/?m=1&o=1'"
+        command_state: "/usr/bin/curl -X GET 'http://water_switch_1/?m=1'| grep ON"
+        #value_template: '{{ value == "1" }}'
+        friendly_name: Water Switch 1
+      water_switch_2:
+        command_on: "/usr/bin/curl -X GET 'http://water_switch_2/?m=1&o=1'"
+        command_off: "/usr/bin/curl -X GET 'http://water_switch_2/?m=1&o=1'"
+        command_state: "/usr/bin/curl -X GET 'http://water_switch_2/?m=1'| grep ON"
+        #value_template: '{{ value == "1" }}'
+        friendly_name: Water Switch 2
+      water_switch_3:
+        command_on: "/usr/bin/curl -X GET 'http://water_switch_3/?m=1&o=1'"
+        command_off: "/usr/bin/curl -X GET 'http://water_switch_3/?m=1&o=1'"
+        command_state: "/usr/bin/curl -X GET 'http://water_switch_3/?m=1'| grep ON"
+        #value_template: '{{ value == "1" }}'
+        friendly_name: Water Switch 3
+      water_switch_4:
+        command_on: "/usr/bin/curl -X GET 'http://water_switch_4/?m=1&o=1'"
+        command_off: "/usr/bin/curl -X GET 'http://water_switch_4/?m=1&o=1'"
+        command_state: "/usr/bin/curl -X GET 'http://water_switch_4/?m=1'| grep ON"
+        #value_template: '{{ value == "1" }}'
+        friendly_name: Water Switch 4
+      water_switch_5:
+        command_on: "/usr/bin/curl -X GET 'http://water_switch_5/?m=1&o=1'"
+        command_off: "/usr/bin/curl -X GET 'http://water_switch_5/?m=1&o=1'"
+        command_state: "/usr/bin/curl -X GET 'http://water_switch_5/?m=1'| grep ON"
+        #value_template: '{{ value == "1" }}'
+        friendly_name: Water Switch 5
+
+
+
+
+light:
+  - platform: group
+    name: Kitchen Lights
+    entities:
+      - light.kitchen_light         
+      - light.kitchen_light_2             
+  - platform: group
+    name: Bathroom Lights
+    entities:
+      - light.bathroom_light
+      - light.toilet_light                
+      - light.hall_light         
+  - platform: group
+    name: Lounge room Lights
+    entities:
+      - light.lounge_light
+      - light.lounge_room_light_2
+      - light.piano_light
+      - light.dining_room_light
+  - platform: group
+    name: Lounge Lights
+    entities: 
+      - light.lounge_light
+      - light.lounge_room_light_2
+      - light.piano_light
+      - light.dining_room_light
+  - platform: group
+    name: Porch Lights
+    entities:
+      - light.porch_light
+      - light.porch_light_2
+  - platform: group
+    name: All the lights
+    entities:
+      - light.office_light
+      - light.front_light
+      - light.bedside_light
+      - light.porch_light
+      - light.porch_light_2
+      - light.lounge_light
+      - light.lounge_room_light_2
+      - light.piano_light
+      - light.dining_room_light
+      - light.bathroom_light
+      - light.toilet_light
+      - light.hall_light
+      - light.kitchen_light
+      - light.kitchen_light_2
+
+group:
+  water_switches:
+    name: Water Switches
+    entities:
+      - switch.water_switch_1
+      - switch.water_switch_2
+      - switch.water_switch_3
+      - switch.water_switch_4
+      - switch.water_switch_5

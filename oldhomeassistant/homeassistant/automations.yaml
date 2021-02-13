@@ -1,0 +1,382 @@
+- id: '15812546956749999'
+  alias: light timeout office light
+  description: ''
+  trigger:
+  - entity_id: light.office_light
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1aa1ea39ec5f4b4db38f94e0f149b199
+    domain: light
+    entity_id: light.office_light
+    type: turn_off
+- id: '15812546956749999'
+  alias: light timeout bedside light
+  description: ''
+  trigger:
+  - entity_id: light.bedside_light
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b199
+    domain: light
+    entity_id: light.bedside_light
+    type: turn_off
+- id: '15812546956669999'
+  alias: light timeout kitchen light
+  description: ''
+  trigger:
+  - entity_id: light.kitchen_light
+    for: 00:20:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b193
+    domain: light
+    entity_id: light.kitchen_light
+    type: turn_off
+- id: '15812526956669999'
+  alias: light timeout kitchen light 2
+  description: ''
+  trigger:
+  - entity_id: light.kitchen_light_2
+    for: 00:20:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b493
+    domain: light
+    entity_id: light.kitchen_light_2
+    type: turn_off
+- id: '15812546956659999'
+  alias: light timeout pantry light
+  description: ''
+  trigger:
+  - entity_id: light.pantry_light
+    for: 00:02:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b192
+    domain: light
+    entity_id: light.pantry_light
+    type: turn_off
+- id: '15812546956699999'
+  alias: light timeout dining_room light
+  description: ''
+  trigger:
+  - entity_id: light.dining_room_light
+    for: 00:20:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b196
+    domain: light
+    entity_id: light.dining_room_light
+    type: turn_off
+- id: '15812546956699997'
+  alias: light timeout lounge light
+  description: ''
+  trigger:
+  - entity_id: light.lounge_room_light
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b194
+    domain: light
+    entity_id: light.lounge_room_light
+    type: turn_off
+- id: '158125146956679999'
+  alias: light timeout lounge room light 2
+  description: ''
+  trigger:
+  - entity_id: light.lounge_room_light_2
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec2f4b4db38f94e0f149b194
+    domain: light
+    entity_id: light.lounge_room_light_2
+    type: turn_off
+- id: '15781251469562679999'
+  alias: light timeout alcove light
+  description: ''
+  trigger:
+  - entity_id: light.alcove_light
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea989ec2f4b4db3ee8f94e0f149b194
+    domain: light
+    entity_id: light.alcove_light
+    type: turn_off
+- id: '1581251469566739999'
+  alias: light timeout piano light
+  description: ''
+  trigger:
+  - entity_id: light.piano_light
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec2f4b4deee38f94e0f149b194
+    domain: light
+    entity_id: light.piano_light
+    type: turn_off
+- id: '15812546956719999'
+  alias: light timeout hall light
+  description: ''
+  trigger:
+  - entity_id: light.hall_light
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b200
+    domain: light
+    entity_id: light.hall_light
+    type: turn_off
+- id: '15812546956689999'
+  alias: light timeout bathroom light
+  description: ''
+  trigger:
+  - entity_id: light.bathroom_light
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b195
+    domain: light
+    entity_id: light.bathroom_light
+    type: turn_off
+- id: '15812546956649999'
+  alias: light timeout toilet light
+  description: ''
+  trigger:
+  - entity_id: light.toilet_light
+    for: 00:10:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b191
+    domain: light
+    entity_id: light.toilet_light
+    type: turn_off
+- id: '15812546956709999'
+  alias: light timeout front light
+  description: ''
+  trigger:
+  - entity_id: light.front_light
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b197
+    domain: light
+    entity_id: light.front_light
+    type: turn_off
+- id: '15812546956729999'
+  alias: light timeout porch light
+  description: ''
+  trigger:
+  - entity_id: light.porch_light
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b198
+    domain: light
+    entity_id: light.porch_light
+    type: turn_off
+- id: '15812546956739999'
+  alias: light timeout porch light 2
+  description: ''
+  trigger:
+  - entity_id: light.porch_light_2
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 1ae1ea39ec5f4b4db38f94e0f149b199
+    domain: light
+    entity_id: light.porch_light_2
+    type: turn_off
+- id: '15812546956759999'
+  alias: light timeout bedroom light
+  description: ''
+  trigger:
+  - entity_id: light.bedroom_light_3
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+- id: '1574607676290'
+  alias: turn on the pool pump at sunrise
+  description: ''
+  trigger:
+  - event: sunrise
+    offset: 02:00
+    platform: sun
+  condition: []
+  action:
+  - data:
+      entity_id: switch.pool_pump
+    service: switch.turn_on
+- id: '1574659055615'
+  alias: Turn off the pool pump at sunset
+  description: ''
+  trigger:
+  - event: sunset
+    offset: -02:00
+    platform: sun
+  condition: []
+  action:
+  - data:
+      entity_id: switch.pool_pump
+    service: switch.turn_off
+- id: '1575418870006'
+  alias: Turn on hot water when inverter > 3KW
+  description: ''
+  trigger:
+  - above: '2000'
+    entity_id: sensor.pv_power
+    for: 60 seconds
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      dd: ees
+    service: homeassistant.turn_on
+- id: '1575680994078'
+  alias: turn off bike charger when power draw drops to zero
+  description: ''
+  trigger:
+  - below: '1'
+    entity_id: sensor.bike_charger_power
+    for: 00:05:05
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      entity_id: switch.bike_charger
+    service: switch.turn_off
+- id: '1575752171328'
+  alias: turn off stereo when inactive
+  description: ''
+  trigger:
+  - below: '0.251'
+    entity_id: sensor.stereo_current
+    for: 00:00:10
+    platform: numeric_state
+  condition: []
+  action:
+  - device_id: 5113d853ebca4fdf9d4502a62f43ccef
+    domain: switch
+    entity_id: switch.stereo
+    type: turn_off
+- id: '1576103464352'
+  alias: turn off the water
+  description: ''
+  trigger:
+  - entity_id: switch.water_switch_1
+    for: 01:00:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.water_switch_1
+    service: switch.turn_off
+- id: '1580963326541'
+  alias: turn on pool pump when power is generated
+  description: ''
+  trigger:
+  - above: '220'
+    entity_id: sensor.grid_power_balance
+    platform: numeric_state
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.pool_pump
+    service: switch.turn_on
+- id: '1580963397819'
+  alias: turn off pool pump when no power is generated
+  description: ''
+  trigger:
+  - below: '20'
+    entity_id: sensor.grid_power_balance
+    platform: numeric_state
+  condition: []
+  action:
+  - entity_id: lkjhlkjh.iuuu
+    service: switch.turn_off
+- id: '1581932867611'
+  alias: turn off the swimming machine if not active
+  description: ''
+  trigger:
+  - above: '0.1'
+    below: '0.3'
+    entity_id: sensor.swimming_machine_current
+    for: 00:10:00
+    platform: numeric_state
+  condition: []
+  action:
+  - device_id: 4f7523b79c284d47b05bc3448e286338
+    domain: switch
+    entity_id: switch.swimming_machine
+    type: turn_off
+- id: '1581932974777'
+  alias: turn on the swimming machine after switch off
+  description: ''
+  trigger:
+  - entity_id: switch.swimming_machine
+    for: 00:00:10
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - device_id: 4f7523b79c284d47b05bc3448e286338
+    domain: switch
+    entity_id: switch.swimming_machine
+    type: turn_on

@@ -1,0 +1,47 @@
+- id: '1613123431280'
+  name: activate office
+  entities:
+    switch.office_computers:
+      friendly_name: Office Computers
+      icon: mdi:television
+      state: 'on'
+    light.office_light:
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      white_value: 255
+      friendly_name: Office Light
+      supported_features: 185
+      state: 'on'
+- id: '1613123478601'
+  name: deactivate office
+  entities:
+    switch.office_computers:
+      friendly_name: Office Computers
+      icon: mdi:television
+      state: 'off'
+    light.office_light:
+      brightness: 255
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      white_value: 255
+      friendly_name: Office Light
+      supported_features: 185
+      state: 'off'
+

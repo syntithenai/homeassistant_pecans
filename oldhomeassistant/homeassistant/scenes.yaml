@@ -1,0 +1,305 @@
+- name: Office Online
+  entities:
+    light.office_light: true
+    switch.file_server: true
+  id: 1920684139df493ba7219f823623f047
+- name: Office Offline
+  entities:
+    light.office_light: false
+    switch.file_server: false
+  id: 193a937410bf4294adce873c275af883
+- id: 0670c3ae155f417aaa155e40c5403f77
+  name: Lights Out
+  entities:
+    group.light_switches:
+      entity_id:
+      - light.office_light
+      - light.bedside_light
+      - light.kitchen_light
+      - light.kitchen_light_2
+      - light.pantry_light
+      - light.dining_room_light
+      - light.lounge_room_light
+      - light.lounge_room_light_2
+      - light.alcove_light
+      - light.piano_light
+      - light.hall_light
+      - light.bathroom_light
+      - light.toilet_light
+      - light.front_light
+      - light.porch_light
+      - light.porch_light_2
+      friendly_name: Light Switches
+      order: 3
+      state: 'off'
+- id: 391b6cb7e3714d58bffdd4a68b782ba2
+  name: All The Lights
+  entities:
+    light.bathroom_light:
+      brightness: 255
+      friendly_name: Bathroom Light
+      state: 'on'
+      supported_features: 41
+    light.dining_room_light:
+      brightness: 255
+      friendly_name: Dining Room Light
+      state: 'on'
+      supported_features: 41
+    light.front_light:
+      brightness: 255
+      color_temp: 250
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Front Light
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 23
+      xy_color:
+      - 0.323
+      - 0.329
+    light.hall_light:
+      brightness: 255
+      friendly_name: Hall Light
+      state: 'on'
+      supported_features: 41
+    light.kitchen_light:
+      brightness: 240
+      color_temp: 160
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen Light
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 23
+      xy_color:
+      - 0.323
+      - 0.329
+    light.lounge_light:
+      brightness: 255
+      friendly_name: Lounge Light
+      state: 'on'
+      supported_features: 41
+    light.office_light:
+      brightness: 255
+      friendly_name: Office Light
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 185
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    light.pantry_light:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Pantry Light
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 23
+      xy_color:
+      - 0.323
+      - 0.329
+    light.porch_light:
+      brightness: 240
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Porch Light
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 23
+      xy_color:
+      - 0.323
+      - 0.329
+    light.porch_light_2:
+      brightness: 255
+      friendly_name: Porch Light 2
+      state: 'on'
+      supported_features: 41
+    light.toilet_light:
+      brightness: 255
+      friendly_name: Toilet Light
+      state: 'on'
+      supported_features: 41
+- name: Path To the Toilet
+  entities:
+    light.kitchen_light: true
+    light.hall_light: true
+    light.toilet_light: true
+  id: aaecb8aca5494e73b14576740d9d1873
+- name: Lounge Room
+  entities:
+    light.lounge_light: true
+    light.kitchen_light: true
+    light.dining_room_light: true
+  id: 3a2dfffd6ab844cd9e1dac16677bc09a
+- name: Lounge Room Lights Out
+  entities:
+    light.lounge_light: false
+    light.kitchen_light: false
+    light.dining_room_light: false
+  id: 50ed12297b2f4d54bffe1daa044f3812
+- name: Porch Lights
+  entities:
+    light.porch_light: true
+    light.porch_light_2: true
+  id: 995da693a92e4ce5bdafb74f053aa9c1
+- name: Porch Lights Out
+  entities:
+    light.porch_light: false
+    light.porch_light_2: false
+  id: 5fef82561e1341179ec168a2228f5ed8
+- name: Front Lights
+  entities:
+    light.front_light: true
+    light.front_light_2: true
+  id: c139bceac5454649bf71a547f497b26f
+- name: Front Lights Out
+  entities:
+    light.front_light: false
+    light.front_light_2: false
+  id: 90460fcb47a4440f857d172081edf6bb
+- id: '1581945105901'
+  name: good night
+  entities:
+    group.light_switches:
+      entity_id:
+      - light.office_light_3
+      - light.bedside_light
+      - light.kitchen_light
+      - light.kitchen_light_2
+      - light.pantry_light
+      - light.dining_room_light
+      - light.lounge_room_light
+      - light.lounge_room_light_2
+      - light.alcove_light
+      - light.piano_light
+      - light.hall_light
+      - light.bathroom_light
+      - light.toilet_light
+      - light.front_light
+      - light.porch_light
+      - light.porch_light_2
+      friendly_name: Light Switches
+      order: 3
+      state: 'off'
+    switch.bedroom_tv:
+      friendly_name: Bedroom TV
+      icon: mdi:television
+      state: 'off'
+    switch.file_server:
+      friendly_name: File Server
+      icon: mdi:television
+      state: 'on'
+    switch.stereo:
+      friendly_name: Stereo
+      icon: mdi:television
+      state: 'off'
+- id: '1581984230793'
+  name: light party
+  entities:
+    group.light_switches:
+      entity_id:
+      - light.office_light
+      - light.bedroom_light_3
+      - light.porch_light
+      - light.porch_light_2
+      - light.kitchen_light
+      - light.dining_room_light
+      - light.lounge_room_light
+      - light.hall_light
+      - light.toilet_light
+      - light.front_light
+      - light.pantry_light
+      - light.bathroom_light
+      - light.bedside_light
+      - light.kitchen_light_2
+      - light.lounge_light_2
+      - light.alcove_light
+      - light.piano_light
+      friendly_name: Light Switches
+      order: 3
+      state: 'on'
+- id: '1582161501117'
+  name: time for bed
+  entities:
+    light.bedside_light:
+      brightness: 255
+      friendly_name: Bedside Light
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 185
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    switch.bedroom_tv:
+      friendly_name: Bedroom TV
+      icon: mdi:television
+      state: 'on'

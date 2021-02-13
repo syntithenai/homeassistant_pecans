@@ -1,0 +1,36 @@
+esphome:
+  name: light_w_4
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  networks:
+  - ssid: "HOUSE"
+    password: Welcome2
+    priority: 2
+  - ssid: "PEPPERTREES"
+    password: Welcome2
+    priority: 1
+  use_address: 192.168.2.52
+
+logger:
+
+api:
+
+ota:
+
+
+web_server:
+  port: 80
+
+output:
+  - platform: esp8266_pwm
+    id: light_w_4
+    pin: GPIO13
+
+light:
+  - platform: monochromatic
+    name: Bathroom Light
+    output: light_w_4
+    # Ensure the light turns on by default if the physical switch is actuated.
+    restore_mode: ALWAYS_ON

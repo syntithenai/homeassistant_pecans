@@ -1,0 +1,15 @@
+- id: '1613098951487'
+  alias: restore the Internet Connection
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.taras_fridge
+    to: 'off'
+    for: 00:00:30
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 9996174660c00aa39476ca49b238a8c1
+    entity_id: switch.taras_fridge
+    domain: switch
+  mode: restart

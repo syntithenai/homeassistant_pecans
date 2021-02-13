@@ -1,0 +1,30 @@
+version: "3"
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:stable
+    volumes:
+      - /opt/homeassistant/config:/config
+      - /mnt/usbdrive/media:/media
+    environment:
+      - TZ=Australia/Sydney
+    restart: always
+    network_mode: host
+
+#  mariadb:
+#    image: linuxserver/mariadb
+#    container_name: mariadb
+#    restart: unless-stopped
+#    environment:
+#      MYSQL_ROOT_PASSWORD: asdfasdf
+#      MYSQL_DATABASE: ha_db
+#      MYSQL_USER: homeassistant
+#      MYSQL_PASSWORD: asdfasdfe
+#      PUID: 1000
+#      PGID: 1000
+#    volumes:
+##      - /opt/homeassistant/mariadb:/config
+#       - /mnt/usbdrive/homeassistant/mariadb:/config
+#    ports:
+#      - "3306:3306"
+#    network_mode: host

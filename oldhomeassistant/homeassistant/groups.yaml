@@ -1,0 +1,90 @@
+  device_power_usage:
+    name: Device Power Usage
+    entities:
+      - sensor.pool_pump_power
+      - sensor.garden_pump_power
+      - sensor.bike_charger_power
+      - sensor.swimming_machine_power
+      - sensor.file_server_power
+      - sensor.stereo_power
+      - sensor.fridge_power
+      - sensor.jug_power
+      - sensor.coffee_machine_power
+      - sensor.bedroom_tv_power
+      - sensor.lounge_tv_power
+      - sensor.taras_tv_power
+      - sensor.taras_washing_machine_power
+      - sensor.taras_fridge_power_2
+      
+  device_daily_energy:
+    name: Device Power Usage
+    entities:
+      - sensor.pool_pump_daily_energy
+      - sensor.garden_pump_daily_energy
+      - sensor.bike_charger_daily_energy
+      - sensor.swimming_machine_daily_energy
+      - sensor.file_server_daily_energy
+      - sensor.stereo_daily_energy
+      - sensor.fridge_daily_energy
+      - sensor.jug_daily_energy
+      - sensor.coffee_machine_daily_energy
+      - sensor.bedroom_tv_daily_energy
+      - sensor.lounge_tv_daily_energy
+      - sensor.taras_tv_daily_energy
+      - sensor.taras_washing_machine_daily_energy
+      - sensor.taras_fridge_daily_energy_2
+      
+  device_switches:
+    name: Device Switches
+    entities:
+      - switch.pool_pump
+      - switch.garden_pump
+      - switch.bike_charger
+      - switch.swimming_machine
+      - switch.file_server
+      - switch.stereo
+      - switch.fridge
+      - switch.jug
+      - switch.coffee_machine
+      - switch.bedroom_tv
+      - switch.lounge_tv
+      - switch.taras_tv
+      - switch.taras_washing_machine
+      - switch.taras_fridge_2
+      
+  light_switches: 
+    name: Light Switches
+    entities:
+      - light.office_light_3
+      - light.bedside_light
+      - light.kitchen_light
+      - light.kitchen_light_2
+      - light.pantry_light
+      - light.dining_room_light
+      - light.lounge_room_light
+      - light.lounge_room_light_2
+      - light.alcove_light
+      - light.piano_light
+      - light.hall_light
+      - light.bathroom_light
+      - light.toilet_light
+      - light.front_light
+      - light.porch_light
+      - light.porch_light_2
+
+      
+  power_costs:
+    name: Power Costs
+    entities:
+      - sensor.hourly_grid_power_sold
+      - sensor.hourly_grid_power_purchased
+      - sensor.hourly_grid_power_saved
+      - sensor.daily_grid_power_sold
+      - sensor.daily_grid_power_purchased
+      - sensor.daily_grid_power_saved
+      - sensor.monthly_grid_power_sold
+      - sensor.monthly_grid_power_purchased
+      - sensor.monthly_grid_power_saved
+      - sensor.yearly_grid_power_sold
+      - sensor.yearly_grid_power_purchased
+      - sensor.yearly_grid_power_saved
