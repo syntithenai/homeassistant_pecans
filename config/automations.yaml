@@ -13,3 +13,54 @@
     entity_id: switch.taras_fridge
     domain: switch
   mode: restart
+- id: '1613288664127'
+  alias: Water Kitchen Garden
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00:01
+  condition:
+  - condition: time
+    after: 00:00:00
+  action:
+  - service: script.water_kitchen_garden
+    data: {}
+  mode: single
+- id: '1613291428653'
+  alias: Water Asparagus Garden
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00:00
+  condition:
+  - condition: time
+    after: 00:00:00
+  action:
+  - service: script.turn_on
+    data: {}
+    entity_id: script.water_asparagus_garden
+  mode: single
+- id: '1613291654633'
+  alias: Restart Internet when disconnected
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.is_online
+    to: 'OFF'
+    for: 00:10:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 9996174660c00aa39476ca49b238a8c1
+    entity_id: switch.taras_fridge
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - type: turn_on
+    device_id: 9996174660c00aa39476ca49b238a8c1
+    entity_id: switch.taras_fridge
+    domain: switch
+  mode: single

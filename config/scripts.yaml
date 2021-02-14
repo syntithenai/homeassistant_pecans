@@ -1,0 +1,46 @@
+water_asparagus_garden:
+  alias: water side garden
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.water_switch_1
+  - delay:
+      hours: 120
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.water_switch_1
+  mode: single
+water_kitchen_garden:
+  alias: water kitchen garden
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.water_switch_2
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.water_switch_2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 20
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.water_switch_3
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.water_switch_3
+  mode: single

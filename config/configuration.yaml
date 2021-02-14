@@ -32,45 +32,46 @@ logbook:
   include:
     entity_globs: none
 
-asuswrt:
-  host: 192.168.1.1   
-  username: admin              
-  password: joifwe
-  protocol: telnet
-  mode: ap
-  sensors:
-    - devices
-    - upload
-    - download
-    - upload_speed
-    - download_speed
+#asuswrt:
+#  host: 192.168.1.1   
+#  username: admin              
+#  password: joifwe
+#  protocol: telnet
+#  mode: ap
+#  sensors:
+#    - devices
+#    - upload
+#    - download
+#    - upload_speed
+#    - download_speed
 
 
 binary_sensor:
   - platform: ping
     host: google.com 
     name: "is online"
-    count: 2
-    scan_interval: 120
+    count: 1
+    scan_interval: 30
 
 sensor:
-#  - platform: sma
-#    host: 192.168.1.100
-#    ssl: true
-#    verify_ssl: false
-#    password: Pyramid1
-#    group: installer
-#    sensors:
-#      - grid_power_supplied
-#      - grid_power_absorbed
-#      - grid_total_yield
-#      - grid_total_absorbed
-#      - grid_power
-
-  - platform: template
+  - platform: sma
+    host: 192.168.1.100
+    ssl: true
+    verify_ssl: false
+    password: Pyramid1
+    group: installer
     sensors:
-      pixel2battery:
-        value_template: "{{  state_attr('device_tracker.stever_pixel2','battery_level') }}"
+      - grid_power_supplied
+      - grid_power_absorbed
+      - grid_total_yield
+      - grid_total_absorbed
+      - grid_power
+
+#  - platform: template
+#    sensors:
+#      pixel2battery:
+#        value_template: "{{  state_attr('device_tracker.stever_pixel2','battery_level') }}"
+
 switch:
   - platform: command_line
     switches:
@@ -78,31 +79,26 @@ switch:
         command_on: "/usr/bin/curl -X GET 'http://water_switch_1/?m=1&o=1'"
         command_off: "/usr/bin/curl -X GET 'http://water_switch_1/?m=1&o=1'"
         command_state: "/usr/bin/curl -X GET 'http://water_switch_1/?m=1'| grep ON"
-        #value_template: '{{ value == "1" }}'
         friendly_name: Water Switch 1
       water_switch_2:
         command_on: "/usr/bin/curl -X GET 'http://water_switch_2/?m=1&o=1'"
         command_off: "/usr/bin/curl -X GET 'http://water_switch_2/?m=1&o=1'"
         command_state: "/usr/bin/curl -X GET 'http://water_switch_2/?m=1'| grep ON"
-        #value_template: '{{ value == "1" }}'
         friendly_name: Water Switch 2
       water_switch_3:
         command_on: "/usr/bin/curl -X GET 'http://water_switch_3/?m=1&o=1'"
         command_off: "/usr/bin/curl -X GET 'http://water_switch_3/?m=1&o=1'"
         command_state: "/usr/bin/curl -X GET 'http://water_switch_3/?m=1'| grep ON"
-        #value_template: '{{ value == "1" }}'
         friendly_name: Water Switch 3
       water_switch_4:
         command_on: "/usr/bin/curl -X GET 'http://water_switch_4/?m=1&o=1'"
         command_off: "/usr/bin/curl -X GET 'http://water_switch_4/?m=1&o=1'"
         command_state: "/usr/bin/curl -X GET 'http://water_switch_4/?m=1'| grep ON"
-        #value_template: '{{ value == "1" }}'
         friendly_name: Water Switch 4
       water_switch_5:
         command_on: "/usr/bin/curl -X GET 'http://water_switch_5/?m=1&o=1'"
         command_off: "/usr/bin/curl -X GET 'http://water_switch_5/?m=1&o=1'"
         command_state: "/usr/bin/curl -X GET 'http://water_switch_5/?m=1'| grep ON"
-        #value_template: '{{ value == "1" }}'
         friendly_name: Water Switch 5
 
 

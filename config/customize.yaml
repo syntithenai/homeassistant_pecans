@@ -1,2 +1,8 @@
 binary_sensor.taras_fridge_button:
   friendly_name: Internet Connection Button
+switch.water_switch_2:
+  friendly_name: Kitchen Garden Top
+switch.water_switch_3:
+  friendly_name: Kitchen Garden Bottom
+switch.water_switch_1:
+  friendly_name: Asparagus Garden
