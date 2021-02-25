@@ -6,13 +6,51 @@ default_config:
 tts:
   - platform: google_translate
 
-group: !include groups.yaml
+#group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+homeassistant:
+  customize: !include customize.yaml
 
 mqtt:
   broker: 192.168.1.11     
+
+sonoff:
+  username: syntithenai@gmail.com
+  password: pojpoj72
+  mode: local
+  reload: always  # update device list every time HA starts
+  force_update: [temperature, power]
+  scan_interval: '00:01:00'  # (optional) default 5 minutes
+  sensors: [temperature, humidity, power, current, voltage]
+  rfbridge:
+    Motion sensor outside 1: 
+      device_class: motion
+      timeout: 30 
+    Motion sensor outside 2:
+      device_class: motion
+      timeout: 30
+    Motion sensor outside 3:
+      device_class: motion
+      timeout: 30
+    Motion sensor inside 1:
+      device_class: motion
+      timeout: 30
+    Motion sensor inside 2:
+      device_class: motion
+      timeout: 30
+    Motion sensor inside 3:
+      device_class: motion
+      timeout: 30
+    Motion sensor inside 4: 
+      device_class: motion
+      timeout: 30  
+    Motion sensor inside 5: 
+      device_class: motion
+      timeout: 30  
+
+
 
 recorder:
 #  db_url: mysql://homeassistant:pojpoj72@192.168.1.11/homeassistant?charset=utf8
@@ -45,6 +83,9 @@ logbook:
 #    - upload_speed
 #    - download_speed
 
+shell_command:
+  suspend_laptop: ssh -o 'StrictHostKeyChecking=no' stever@192.168.1.10 'sudo pm-suspend'
+
 
 binary_sensor:
   - platform: ping
@@ -73,6 +114,11 @@ sensor:
 #        value_template: "{{  state_attr('device_tracker.stever_pixel2','battery_level') }}"
 
 switch:
+  - platform: wake_on_lan
+    mac: 4C:CC:6A:7E:AA:43
+    host: 192.168.1.10
+    turn_off:
+      service: shell_command.suspend_laptop
   - platform: command_line
     switches:
       water_switch_1:

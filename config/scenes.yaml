@@ -1,10 +1,6 @@
 - id: '1613123431280'
-  name: activate office
+  name: office online
   entities:
-    switch.office_computers:
-      friendly_name: Office Computers
-      icon: mdi:television
-      state: 'on'
     light.office_light:
       brightness: 255
       hs_color:
@@ -20,28 +16,99 @@
       white_value: 255
       friendly_name: Office Light
       supported_features: 185
+      state: 'on'
+    switch.wake_on_lan:
+      friendly_name: Steve's Laptop
       state: 'on'
 - id: '1613123478601'
-  name: deactivate office
+  name: office offline
   entities:
-    switch.office_computers:
-      friendly_name: Office Computers
-      icon: mdi:television
-      state: 'off'
     light.office_light:
-      brightness: 255
-      hs_color:
-      - 0
-      - 0
-      rgb_color:
-      - 255
-      - 255
-      - 255
-      xy_color:
-      - 0.323
-      - 0.329
-      white_value: 255
       friendly_name: Office Light
       supported_features: 185
       state: 'off'
-
+    switch.wake_on_lan:
+      friendly_name: Steve's Laptop
+      state: 'off'
+- id: '1613292212365'
+  name: Good Night
+  entities:
+    media_player.bedroom_tv:
+      friendly_name: Bedroom TV
+      supported_features: 152461
+      state: unavailable
+    light.front_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Front Light
+      supported_features: 23
+      state: 'off'
+    light.porch_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Porch Light
+      supported_features: 23
+      state: 'off'
+    switch.bedroom_tv:
+      friendly_name: Bedroom TV
+      icon: mdi:television
+      state: 'off'
+    light.kitchen_light_2:
+      friendly_name: Kitchen Light 2
+      supported_features: 185
+      state: 'off'
+    light.lounge_room_light_2:
+      friendly_name: Lounge Room Light 2
+      supported_features: 185
+      state: 'off'
+    light.bedside_light:
+      friendly_name: Bedside Light
+      supported_features: 185
+      state: 'off'
+    light.office_light:
+      friendly_name: Office Light
+      supported_features: 185
+      state: 'off'
+    light.piano_light:
+      friendly_name: Piano Light
+      supported_features: 41
+      state: 'off'
+    light.lounge_light:
+      friendly_name: Lounge Light
+      supported_features: 41
+      state: 'off'
+    light.dining_room_light:
+      friendly_name: Dining Room Light
+      supported_features: 41
+      state: 'off'
+    light.hall_light:
+      friendly_name: Hall Light
+      supported_features: 41
+      state: 'off'
+    light.toilet_light:
+      friendly_name: Toilet Light
+      supported_features: 41
+      state: 'off'
+    light.porch_light_2:
+      friendly_name: Porch Light 2
+      supported_features: 41
+      state: 'off'
+    light.bathroom_light:
+      friendly_name: Bathroom Light
+      supported_features: 41
+      state: 'off'
+    switch.wake_on_lan:
+      friendly_name: Steve's Laptop
+      state: 'off'

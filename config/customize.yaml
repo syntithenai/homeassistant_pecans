@@ -6,3 +6,27 @@ switch.water_switch_3:
   friendly_name: Kitchen Garden Bottom
 switch.water_switch_1:
   friendly_name: Asparagus Garden
+switch.wake_on_lan:
+  friendly_name: Steve's Laptop
+switch.jug:
+  friendly_name: Food Drier
+sensor.jug_power:
+  friendly_name: Food Drier Power
+sensor.jug_daily_energy:
+  friendly_name: Food Drier Daily Energy
+binary_sensor.motion_sensor_inside_5:
+  friendly_name: Motion sensor bathroom
+binary_sensor.motion_sensor_outside_1:
+  friendly_name: Motion sensor front door
+binary_sensor.motion_sensor_outside_3:
+  friendly_name: Motion sensor driveway
+binary_sensor.motion_sensor_outside_2:
+  friendly_name: Motion sensor porch
+binary_sensor.motion_sensor_inside_4:
+  friendly_name: Motion sensor office
+binary_sensor.motion_sensor_inside_3:
+  friendly_name: Motion sensor dining
+binary_sensor.motion_sensor_inside_1:
+  friendly_name: Motion sensor bedroom
+binary_sensor.motion_sensor_inside_2:
+  friendly_name: Motion sensor kitchen

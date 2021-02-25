@@ -5,7 +5,7 @@ water_asparagus_garden:
     data: {}
     entity_id: switch.water_switch_1
   - delay:
-      hours: 120
+      hours: 2
       minutes: 0
       seconds: 0
       milliseconds: 0

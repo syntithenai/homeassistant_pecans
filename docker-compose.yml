@@ -5,7 +5,7 @@ services:
     image: homeassistant/home-assistant:stable
     volumes:
       - /opt/homeassistant/config:/config
-      - /mnt/usbdrive/media:/media
+      - /home/pi/media:/media
     environment:
       - TZ=Australia/Sydney
     restart: always

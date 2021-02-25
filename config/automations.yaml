@@ -1,5 +1,5 @@
 - id: '1613098951487'
-  alias: restore the Internet Connection
+  alias: Restore the Internet Connection
   description: ''
   trigger:
   - platform: state
@@ -12,6 +12,9 @@
     device_id: 9996174660c00aa39476ca49b238a8c1
     entity_id: switch.taras_fridge
     domain: switch
+  - service: persistent_notification.create
+    data:
+      message: Restored the Internet Connection
   mode: restart
 - id: '1613288664127'
   alias: Water Kitchen Garden
@@ -25,6 +28,9 @@
   action:
   - service: script.water_kitchen_garden
     data: {}
+  - service: persistent_notification.create
+    data:
+      message: Finished watering the kitchen garden
   mode: single
 - id: '1613291428653'
   alias: Water Asparagus Garden
@@ -35,10 +41,16 @@
   condition:
   - condition: time
     after: 00:00:00
+    weekday:
+    - tue
+    - sat
   action:
   - service: script.turn_on
     data: {}
     entity_id: script.water_asparagus_garden
+  - service: persistent_notification.create
+    data:
+      message: Finished watering the asparagus garden
   mode: single
 - id: '1613291654633'
   alias: Restart Internet when disconnected
@@ -63,4 +75,349 @@
     device_id: 9996174660c00aa39476ca49b238a8c1
     entity_id: switch.taras_fridge
     domain: switch
+  - service: notify.notify
+    data:
+      title: Restarted the internet
+  mode: single
+- id: '1614125344635'
+  alias: turn food drier  on
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 365af36128280fa2970ee02bad9cc1c2
+    entity_id: switch.jug
+    domain: switch
+  mode: single
+- id: '1614125392329'
+  alias: turn food drier off
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 04:00:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 365af36128280fa2970ee02bad9cc1c2
+    entity_id: switch.jug
+    domain: switch
+  mode: single
+- id: '1614138624012'
+  alias: motion office light
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor inside 4
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: ed8adfe40cbfbde8af37baa74d31f5f6
+    entity_id: light.office_light
+    domain: light
+  mode: single
+- id: '1614168322327'
+  alias: motion bathroom lights
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor inside 5
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: db7554dcf7d7d473b2564236e0a14387
+    entity_id: light.hall_light
+    domain: light
+  - type: turn_on
+    device_id: 211da4e2b46a6a423372d7b475f00cb0
+    entity_id: light.toilet_light
+    domain: light
+  - type: turn_on
+    device_id: 3974d88feffdb94291ee18aa5e68cb7f
+    entity_id: light.bathroom_light
+    domain: light
+  mode: single
+- id: '1614172489794'
+  alias: motion kitchen light
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor inside 2
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: cec45958b7cd52332606ff90b996cb6d
+    entity_id: light.kitchen_light_2
+    domain: light
+  - type: turn_on
+    device_id: 5acb53accb4bc03096664d3024cb2c33
+    entity_id: light.kitchen_light
+    domain: light
+  mode: single
+- id: '1614173760557'
+  alias: motion bedroom lights
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor inside 1
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  action:
+  - type: turn_on
+    device_id: 570c433b96a40799a65b7c3f5e3fbfc1
+    entity_id: light.bedside_light
+    domain: light
+  mode: single
+- id: '1614218947266'
+  alias: motion front light
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor outside 1
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: 297dbf25503d06d8ad6f9087d1144d8d
+    entity_id: light.front_light
+    domain: light
+  mode: single
+- id: '1614221228785'
+  alias: motion driveway warning
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor outside 3
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: all
+      message: Something moved in the driveway
+  - service: persistent_notification.create
+    data:
+      message: Something moved in the driveway
+  mode: single
+- id: '15812546956689999'
+  alias: light timeout bedside light
+  description: ''
+  trigger:
+  - entity_id: light.bedside_light
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bedside_light
+  mode: single
+- id: '1614222575740'
+  alias: light timeout lounge lights
+  description: ''
+  trigger:
+  - entity_id: light.lounge_lights
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.lounge_lights
+  mode: single
+- id: '1614222624930'
+  alias: light timeout porch lights
+  description: ''
+  trigger:
+  - entity_id: light.porch_lights
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.porch_lights
+  mode: single
+- id: '1614222697132'
+  alias: light timeout kitchen lights
+  description: ''
+  trigger:
+  - entity_id: light.kitchen_lights
+    for: 00:05:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.kitchen_lights
+  mode: single
+- id: '1614223928489'
+  alias: motion front alarm
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor outside 1
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Someone at the front door
+  - service: light.toggle
+    data: {}
+    entity_id: 'light.office_light '
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - service: light.toggle
+    data: {}
+    entity_id: light.office_light
+  - service: light.toggle
+    data: {}
+    entity_id: light.kitchen_lights
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - service: light.toggle
+    data: {}
+    entity_id: light.kitchen_lights
+  - service: light.toggle
+    data: {}
+    entity_id: light.bedside_light
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - service: light.toggle
+    data: {}
+    entity_id: light.bedside_light
+  mode: single
+- id: '1614224095156'
+  alias: light timeout office light
+  description: ''
+  trigger:
+  - entity_id: light.office_light
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.office_light
+  mode: single
+- id: '1614226313603'
+  alias: light timeout front light
+  description: ''
+  trigger:
+  - entity_id: light.front_light
+    for: 00:02:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.front_light
+  mode: single
+- id: '1614227284124'
+  alias: motion dining light
+  description: ''
+  trigger:
+  - platform: event
+    event_type: sonoff.remote
+    event_data:
+      name: Motion sensor inside 3
+  condition:
+  - condition: state
+    entity_id: input_boolean.enable_motion_sensors
+    state: 'on'
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: cec45958b7cd52332606ff90b996cb6d
+    entity_id: light.kitchen_light_2
+    domain: light
+  - type: turn_on
+    device_id: 5acb53accb4bc03096664d3024cb2c33
+    entity_id: light.kitchen_light
+    domain: light
+  mode: single
+- id: '1614227470141'
+  alias: light timeout bathroom lights
+  description: ''
+  trigger:
+  - entity_id: light.bathroom_lights
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.bathroom_lights
   mode: single
