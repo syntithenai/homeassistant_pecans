@@ -121,6 +121,7 @@
   - condition: sun
     before: sunrise
     after: sunset
+    after_offset: -02:00:00
   action:
   - type: turn_on
     device_id: ed8adfe40cbfbde8af37baa74d31f5f6
@@ -142,6 +143,7 @@
   - condition: sun
     before: sunrise
     after: sunset
+    after_offset: -02:00:00
   action:
   - type: turn_on
     device_id: db7554dcf7d7d473b2564236e0a14387
@@ -171,6 +173,7 @@
   - condition: sun
     before: sunrise
     after: sunset
+    after_offset: -02:00:00
   action:
   - type: turn_on
     device_id: cec45958b7cd52332606ff90b996cb6d
@@ -214,6 +217,7 @@
   - condition: sun
     before: sunrise
     after: sunset
+    after_offset: -02:00:00
   action:
   - type: turn_on
     device_id: 297dbf25503d06d8ad6f9087d1144d8d
@@ -396,6 +400,7 @@
   - condition: sun
     before: sunrise
     after: sunset
+    after_offset: -02:00:00
   action:
   - type: turn_on
     device_id: cec45958b7cd52332606ff90b996cb6d
